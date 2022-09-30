@@ -1,22 +1,34 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {ToDoList} from "./ToDoList";
+import {v1} from "uuid";
+
+export type FilterButtonType = 'All' | 'Active' | 'Completed'
+
 
 function App() {
 
     const title1 = 'What to learn'
 
     const [tasks1, setTask] = useState([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'React', isDone: false}
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'React', isDone: false}
     ])
 
-    const removeTask = (taskID: number) => {
+
+
+    const addTask = (newTitle: string) => {
+        const newTask = {id: v1(), title: newTitle, isDone: false}
+            setTask([newTask,...tasks1])
+    }
+
+    const removeTask = (taskID: string) => {
         setTask(tasks1.filter(el => el.id !== taskID))
     }
 
-    const [colanderValue, setColander] = useState('All')
+    const [colanderValue, setColander] = useState<FilterButtonType>('All')
+
     let colander = tasks1
 
     if (colanderValue === 'Active') {
@@ -27,7 +39,7 @@ function App() {
         colander = tasks1.filter(el => el.isDone)
     }
 
-    const changeFilter = (filterValue: 'All' | 'Active' | 'Completed') => {
+    const changeFilter = (filterValue: FilterButtonType) => {
         setColander(filterValue)
     }
 
@@ -40,6 +52,7 @@ function App() {
                 tasks={colander}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
         </div>
     )
