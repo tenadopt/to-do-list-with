@@ -5,7 +5,6 @@ import {v1} from "uuid";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
-
 function App() {
 
     const title1 = 'What to learn'
@@ -15,8 +14,6 @@ function App() {
         {id: v1(), title: 'JS', isDone: true},
         {id: v1(), title: 'React', isDone: false}
     ])
-
-
 
     const addTask = (newTitle: string) => {
         const newTask = {id: v1(), title: newTitle, isDone: false}
@@ -42,7 +39,6 @@ function App() {
     const changeFilter = (filterValue: FilterButtonType) => {
         setColander(filterValue)
     }
-
 
     return (
 
