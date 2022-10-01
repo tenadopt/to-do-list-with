@@ -15,6 +15,10 @@ function App() {
         {id: v1(), title: 'React', isDone: false}
     ])
 
+    const changeCheckBoxStatus = (newIsDone:boolean) => {
+        console.log(newIsDone)
+    }
+
     const addTask = (newTitle: string) => {
         const newTask = {id: v1(), title: newTitle, isDone: false}
             setTask([newTask,...tasks1])
@@ -23,6 +27,8 @@ function App() {
     const removeTask = (taskID: string) => {
         setTask(tasks1.filter(el => el.id !== taskID))
     }
+
+
 
     const [colanderValue, setColander] = useState<FilterButtonType>('All')
 
@@ -49,6 +55,7 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeCheckBoxStatus={changeCheckBoxStatus}
             />
         </div>
     )
