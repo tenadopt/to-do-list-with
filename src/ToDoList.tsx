@@ -14,7 +14,7 @@ type ToDoListProps = {
     removeTask: (taskID: string) => void
     changeFilter: (filterValue: FilterButtonType) => void
     addTask: (title: string) => void
-    changeCheckBoxStatus: (newIsDone:boolean)=>void
+    changeCheckBoxStatus: (taskId:string, newIsDoneValue:boolean)=>void
 }
 
 export const ToDoList = (props: ToDoListProps) => {
@@ -49,7 +49,7 @@ export const ToDoList = (props: ToDoListProps) => {
     const mapTasks = props.tasks.map(el => {
 
         const changeCheckBoxStatusHandler = (event:ChangeEvent<HTMLInputElement>) => {
-            props.changeCheckBoxStatus(event.currentTarget.checked)
+            props.changeCheckBoxStatus(el.id, event.currentTarget.checked)
         }
 
         return (

@@ -9,37 +9,42 @@ function App() {
 
     const title1 = 'What to learn'
 
-    const [tasks1, setTask] = useState([
+    const [tasks, setTasks] = useState([
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
         {id: v1(), title: 'React', isDone: false}
     ])
 
-    const changeCheckBoxStatus = (newIsDone:boolean) => {
-        console.log(newIsDone)
+    const changeCheckBoxStatus = (taskId: string, newIsDoneValue: boolean) => {
+        // let currentTask = tasks.find(el => el.id === taskId)
+        // if (currentTask) {
+        //     currentTask.isDone = newIsDoneValue
+        //     setTask([...tasks])
+        // }
+
+        setTasks(tasks.map(el=>el.id===taskId ? {...el, isDone:newIsDoneValue}:el))
     }
 
     const addTask = (newTitle: string) => {
         const newTask = {id: v1(), title: newTitle, isDone: false}
-            setTask([newTask,...tasks1])
+        setTasks([newTask, ...tasks])
     }
 
     const removeTask = (taskID: string) => {
-        setTask(tasks1.filter(el => el.id !== taskID))
+        setTasks(tasks.filter(el => el.id !== taskID))
     }
-
 
 
     const [colanderValue, setColander] = useState<FilterButtonType>('All')
 
-    let colander = tasks1
+    let colander = tasks
 
     if (colanderValue === 'Active') {
-        colander = tasks1.filter(el => !el.isDone)
+        colander = tasks.filter(el => !el.isDone)
     }
 
     if (colanderValue === 'Completed') {
-        colander = tasks1.filter(el => el.isDone)
+        colander = tasks.filter(el => el.isDone)
     }
 
     const changeFilter = (filterValue: FilterButtonType) => {
