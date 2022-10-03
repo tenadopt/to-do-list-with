@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from "react";
 import {FilterButtonType} from './App'
 import {Button} from "./components/Button";
+import styles from './ToDolist.module.css'
 
 export type TaskType = {
     id: string
@@ -14,7 +15,7 @@ type ToDoListProps = {
     removeTask: (taskID: string) => void
     changeFilter: (filterValue: FilterButtonType) => void
     addTask: (title: string) => void
-    changeCheckBoxStatus: (taskId:string, newIsDoneValue:boolean)=>void
+    changeCheckBoxStatus: (taskId: string, newIsDoneValue: boolean) => void
 }
 
 export const ToDoList = (props: ToDoListProps) => {
@@ -22,9 +23,10 @@ export const ToDoList = (props: ToDoListProps) => {
     const [title, setTitle] = useState('')
 
     const addTaskHandler = () => {
-        props.addTask(title)
-        setTitle(' ')
-        console.log(title)
+        if (title.trim() !== '') {
+            props.addTask(title.trim())
+            setTitle('')
+        }
     }
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +50,7 @@ export const ToDoList = (props: ToDoListProps) => {
 
     const mapTasks = props.tasks.map(el => {
 
-        const changeCheckBoxStatusHandler = (event:ChangeEvent<HTMLInputElement>) => {
+        const changeCheckBoxStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
             props.changeCheckBoxStatus(el.id, event.currentTarget.checked)
         }
 
@@ -73,12 +75,9 @@ export const ToDoList = (props: ToDoListProps) => {
             <ul>
                 {mapTasks}
             </ul>
-            <div>
-                <Button name={'All'} callBack={() => tsarChangeFilter('All')}/>
-                <Button name={'Active'} callBack={() => tsarChangeFilter('Active')}/>
-                <Button name={'Completed'} callBack={() => tsarChangeFilter('Completed')}/>
-            </div>
-
+            <Button name={'All'} callBack={() => tsarChangeFilter('All')}/>
+            <Button name={'Active'} callBack={() => tsarChangeFilter('Active')}/>
+            <Button name={'Completed'} callBack={() => tsarChangeFilter('Completed')}/>
         </div>
-    );
+)
 }
