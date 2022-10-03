@@ -21,15 +21,20 @@ type ToDoListProps = {
 export const ToDoList = (props: ToDoListProps) => {
 
     const [title, setTitle] = useState('')
+    const [error, setError] = useState(false)
 
     const addTaskHandler = () => {
         if (title.trim() !== '') {
             props.addTask(title.trim())
             setTitle('')
         }
+        else {
+            setError(true)
+        }
     }
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setError(false)
         setTitle(event.currentTarget.value)
     }
 
@@ -69,7 +74,10 @@ export const ToDoList = (props: ToDoListProps) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={title} onChange={onChangeHandler} onKeyUp={onKeyPressHandler}/>
+                <input className={error ? styles.error : ''}
+                       value={title}
+                       onChange={onChangeHandler}
+                       onKeyUp={onKeyPressHandler}/>
                 <button onClick={addTaskHandler}>+</button>
             </div>
             <ul>
@@ -79,5 +87,5 @@ export const ToDoList = (props: ToDoListProps) => {
             <Button name={'Active'} callBack={() => tsarChangeFilter('Active')}/>
             <Button name={'Completed'} callBack={() => tsarChangeFilter('Completed')}/>
         </div>
-)
+    )
 }
