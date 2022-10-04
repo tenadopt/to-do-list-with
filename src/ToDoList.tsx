@@ -21,7 +21,7 @@ type ToDoListProps = {
 export const ToDoList = (props: ToDoListProps) => {
 
     const [title, setTitle] = useState('')
-    const [error, setError] = useState(false)
+    const [error, setError] = useState<string|null>(null)
 
     const addTaskHandler = () => {
         if (title.trim() !== '') {
@@ -29,12 +29,12 @@ export const ToDoList = (props: ToDoListProps) => {
             setTitle('')
         }
         else {
-            setError(true)
+            setError('Title is required')
         }
     }
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(false)
+        setError(null)
         setTitle(event.currentTarget.value)
     }
 
@@ -80,6 +80,7 @@ export const ToDoList = (props: ToDoListProps) => {
                        onKeyUp={onKeyPressHandler}/>
                 <button onClick={addTaskHandler}>+</button>
             </div>
+            {error && <div className={styles.errorMessage}>{error}</div>}
             <ul>
                 {mapTasks}
             </ul>

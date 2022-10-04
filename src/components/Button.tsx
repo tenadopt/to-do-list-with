@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './components/Button.module.css'
 
 type PropsType = {
     name: string
@@ -10,6 +11,6 @@ export const Button = (props: PropsType) => {
         props.callBack()
     }
     return (
-        <button onClick={onClickHandler}>{props.name}</button>
+        <button className={styles.activeFilter} onClick={onClickHandler}>{props.name}</button>
     )
 }
