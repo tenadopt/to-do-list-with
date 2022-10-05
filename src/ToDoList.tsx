@@ -21,14 +21,14 @@ type ToDoListProps = {
 export const ToDoList = (props: ToDoListProps) => {
 
     const [title, setTitle] = useState('')
-    const [error, setError] = useState<string|null>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [color,setColor] = useState<FilterButtonType>('All')
 
     const addTaskHandler = () => {
         if (title.trim() !== '') {
             props.addTask(title.trim())
             setTitle('')
-        }
-        else {
+        } else {
             setError('Title is required')
         }
     }
@@ -46,12 +46,13 @@ export const ToDoList = (props: ToDoListProps) => {
 
     const tsarChangeFilter = (filterValue: FilterButtonType) => {
         props.changeFilter(filterValue)
+        setColor(filterValue)
+        console.log(filterValue);
     }
 
     const removeTaskHandler = (tId: string) => {
         props.removeTask(tId)
     }
-
 
     const mapTasks = props.tasks.map(el => {
 
@@ -84,9 +85,15 @@ export const ToDoList = (props: ToDoListProps) => {
             <ul>
                 {mapTasks}
             </ul>
-            <Button name={'All'} callBack={() => tsarChangeFilter('All')}/>
-            <Button name={'Active'} callBack={() => tsarChangeFilter('Active')}/>
-            <Button name={'Completed'} callBack={() => tsarChangeFilter('Completed')}/>
+            <Button color={color} name={'All'} callBack={() => {
+                tsarChangeFilter('All')
+            }}/>
+            <Button color={color} name={'Active'} callBack={() => {
+                tsarChangeFilter('Active')
+            }}/>
+            <Button color={color} name={'Completed'} callBack={() => {
+                tsarChangeFilter('Completed')
+            }}/>
         </div>
     )
 }
