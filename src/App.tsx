@@ -18,8 +18,8 @@ function App() {
     const changeCheckBoxStatus = (taskId: string, newIsDoneValue: boolean) => {
         // let currentTask = tasks.find(el => el.id === taskId)
         // if (currentTask) {
-        //     currentTask.isDone = newIsDoneValue
-        //     setTask([...tasks])
+        // currentTask.isDone = newIsDoneValue
+        // setTasks([...tasks])
         // }
 
         setTasks(tasks.map(el=>el.id===taskId ? {...el, isDone:newIsDoneValue}:el))

@@ -14,7 +14,6 @@ export const Button = (props: PropsType) => {
 
     }
 
-
     return (
         <button className={props.color === props.name ? styles.activeFilter:''} onClick={onClickHandler}>{props.name}</button>
     )
