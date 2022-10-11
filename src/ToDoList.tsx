@@ -14,6 +14,7 @@ type ToDoListProps = {
     tasks: Array<TaskType>
     removeTask: (taskID: string) => void
     changeFilter: (filterValue: FilterButtonType) => void
+    filter: (filterValue: FilterButtonType) => void
     addTask: (title: string) => void
     changeCheckBoxStatus: (taskId: string, newIsDoneValue: boolean) => void
 }
