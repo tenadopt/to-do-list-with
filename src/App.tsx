@@ -18,22 +18,46 @@ export type TaskType = {
 
 function App() {
 
-    let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
-            {id: v1(), title: 'What to learn', filter: 'All'},
-            {id: v1(), title: 'What to buy', filter: 'Active'}
+    let toDoListID1 = v1();
+    let toDoListID2 = v1();
+
+    let [toDoLists,setToDoLists] = useState<Array<ToDoListsType>>([
+        {id: toDoListID1, title: 'What to learn', filter: 'All'},
+        {id: toDoListID2, title: 'What to buy', filter: 'All'}
         ]
     )
 
-    // const title1 = 'What to learn'
+    let [tasks, setTasks] = useState({
+        [toDoListID1]: [
+            {id: v1(), title:'HTML&CSS', isDone: true},
+            {id: v1(), title:'JS', isDone: true},
+            {id: v1(), title:'ReactJS', isDone: false},
+            {id: v1(), title:'Rest API', isDone: false},
+            {id: v1(), title:'GraphQL', isDone: false}
+        ],
+        [toDoListID2]: [
+            {id: v1(), title:'HTML&CSS2', isDone: true},
+            {id: v1(), title:'JS2', isDone: true},
+            {id: v1(), title:'ReactJS2', isDone: false},
+            {id: v1(), title:'Rest API2', isDone: false},
+            {id: v1(), title:'GraphQL2', isDone: false}
+        ]
+    })
 
-    const [tasks, setTasks] = useState([
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'React', isDone: false}
-    ])
+    // let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
+    //         {id: v1(), title: 'What to learn', filter: 'All'},
+    //         {id: v1(), title: 'What to buy', filter: 'Active'}
+    //     ]
+    // )
+    //
+    // const [tasks, setTasks] = useState([
+    //     {id: v1(), title: 'HTML&CSS', isDone: true},
+    //     {id: v1(), title: 'JS', isDone: true},
+    //     {id: v1(), title: 'React', isDone: false}
+    // ])
 
     const changeCheckBoxStatus = (taskId: string, newIsDoneValue: boolean) => {
-        // let currentTask = tasks.find(el => el.id === taskId)
+        // let currentTask = tasks.find(el => el.id === taskId) // под капотом
         // if (currentTask) {
         // currentTask.isDone = newIsDoneValue
         // setTasks([...tasks])
@@ -42,8 +66,8 @@ function App() {
     }
 
     const addTask = (newTitle: string) => {
-        const newTask = {id: v1(), title: newTitle, isDone: false}
-        setTasks([newTask, ...tasks])
+        // const newTask = {id: v1(), title: newTitle, isDone: false}
+        // setTasks([newTask, ...tasks])
     }
 
     const removeTask = (taskID: string) => {
@@ -54,7 +78,7 @@ function App() {
     // const [colander, setColander] = useState<FilterButtonType>('All')
 
     const changeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
-        setToDoLists(toDoLists.map(el=>el.id===toDoListsID ? {...el,filter:filterValue} : el))
+        setToDoLists(toDoLists.map(el => el.id === toDoListsID ? {...el, filter: filterValue} : el))
     }
 
     return (
@@ -62,14 +86,14 @@ function App() {
         <div className="App">
             {toDoLists.map(el => {
 
-                let tasksForToDolist = tasks
+                let tasksForToDolist = tasks[el.id]
 
                 if (el.filter === 'Active') {
-                    tasksForToDolist = tasks.filter(el => !el.isDone)
+                    tasksForToDolist = tasks[el.id].filter(el => !el.isDone)
                 }
 
                 if (el.filter === 'Completed') {
-                    tasksForToDolist = tasks.filter(el => el.isDone)
+                    tasksForToDolist = tasks[el.id].filter(el => el.isDone)
                 }
 
                 return (
