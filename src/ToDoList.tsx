@@ -1,23 +1,22 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from "react";
-import {FilterButtonType} from './App'
+import {FilterButtonType, TaskType, ToDoListsType} from './App'
 import {Button} from "./components/Button";
 import styles from './ToDolist.module.css'
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 type ToDoListProps = {
     title: string
+    toDoListsID: string
     tasks: Array<TaskType>
     removeTask: (taskID: string) => void
-    changeFilter: (filterValue: FilterButtonType) => void
-    filter: (filterValue: FilterButtonType) => void
+    changeFilter: (toDoListsID: string, filterValue: FilterButtonType) => void
+    filter: FilterButtonType
     addTask: (title: string) => void
     changeCheckBoxStatus: (taskId: string, newIsDoneValue: boolean) => void
 }
+
+
+
 
 export const ToDoList = (props: ToDoListProps) => {
 
@@ -45,8 +44,8 @@ export const ToDoList = (props: ToDoListProps) => {
         }
     }
 
-    const tsarChangeFilter = (filterValue: FilterButtonType) => {
-        props.changeFilter(filterValue)
+    const tsarChangeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
+        props.changeFilter(props.toDoListsID, filterValue)
         setColor(filterValue)
     }
 
@@ -88,13 +87,13 @@ export const ToDoList = (props: ToDoListProps) => {
                 {mapTasks}
             </ul>
             <Button color={color} name={'All'} callBack={() => {
-                tsarChangeFilter('All')
+                tsarChangeFilter(props.toDoListsID,'All')
             }}/>
             <Button color={color} name={'Active'} callBack={() => {
-                tsarChangeFilter('Active')
+                tsarChangeFilter(props.toDoListsID,'Active')
             }}/>
             <Button color={color} name={'Completed'} callBack={() => {
-                tsarChangeFilter('Completed')
+                tsarChangeFilter(props.toDoListsID,'Completed')
             }}/>
         </div>
     )

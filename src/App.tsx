@@ -4,10 +4,27 @@ import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
+export type ToDoListsType = {
+    id: string
+    title: string
+    filter: FilterButtonType
+}
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
 
 function App() {
 
-    const title1 = 'What to learn'
+    let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
+            {id: v1(), title: 'What to learn', filter: 'All'},
+            {id: v1(), title: 'What to buy', filter: 'Active'}
+        ]
+    )
+
+    // const title1 = 'What to learn'
 
     const [tasks, setTasks] = useState([
         {id: v1(), title: 'HTML&CSS', isDone: true},
@@ -21,8 +38,7 @@ function App() {
         // currentTask.isDone = newIsDoneValue
         // setTasks([...tasks])
         // }
-
-        setTasks(tasks.map(el=>el.id===taskId ? {...el, isDone:newIsDoneValue}:el))
+        setToDoLists(toDoLists.map(el => el.id === taskId ? {...el, isDone: newIsDoneValue} : el))
     }
 
     const addTask = (newTitle: string) => {
@@ -31,37 +47,46 @@ function App() {
     }
 
     const removeTask = (taskID: string) => {
-        setTasks(tasks.filter(el => el.id !== taskID))
+        setToDoLists(toDoLists.filter(el => el.id !== taskID))
     }
 
 
-    const [colanderValue, setColander] = useState<FilterButtonType>('All')
+    // const [colander, setColander] = useState<FilterButtonType>('All')
 
-    let colander = tasks
-
-    if (colanderValue === 'Active') {
-        colander = tasks.filter(el => !el.isDone)
-    }
-
-    if (colanderValue === 'Completed') {
-        colander = tasks.filter(el => el.isDone)
-    }
-
-    const changeFilter = (filterValue: FilterButtonType) => {
-        setColander(filterValue)
+    const changeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
+        setToDoLists(toDoLists.map(el=>el.id===toDoListsID ? {...el,filter:filterValue} : el))
     }
 
     return (
 
         <div className="App">
-            <ToDoList
-                title={title1}
-                tasks={colander}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-                addTask={addTask}
-                changeCheckBoxStatus={changeCheckBoxStatus}
-            />
+            {toDoLists.map(el => {
+
+                let tasksForToDolist = tasks
+
+                if (el.filter === 'Active') {
+                    tasksForToDolist = tasks.filter(el => !el.isDone)
+                }
+
+                if (el.filter === 'Completed') {
+                    tasksForToDolist = tasks.filter(el => el.isDone)
+                }
+
+                return (
+                    <ToDoList
+                        key={el.id}
+                        title={el.title}
+                        toDoListsID={el.id}
+                        tasks={tasksForToDolist}
+                        removeTask={removeTask}
+                        changeFilter={changeFilter}
+                        filter={el.filter}
+                        addTask={addTask}
+                        changeCheckBoxStatus={changeCheckBoxStatus}
+                    />
+                )
+            })}
+
         </div>
     )
 }
