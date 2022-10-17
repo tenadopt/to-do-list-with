@@ -10,6 +10,12 @@ export type ToDoListsType = {
     filter: FilterButtonType
 }
 
+// export type toDoListID = {
+//     id: string
+//     title: string
+//     isDone: boolean
+// }
+
 export type TaskType = {
     id: string
     title: string
@@ -21,26 +27,26 @@ function App() {
     let toDoListID1 = v1();
     let toDoListID2 = v1();
 
-    let [toDoLists,setToDoLists] = useState<Array<ToDoListsType>>([
-        {id: toDoListID1, title: 'What to learn', filter: 'All'},
-        {id: toDoListID2, title: 'What to buy', filter: 'All'}
+    let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
+            {id: toDoListID1, title: 'What to learn', filter: 'All'},
+            {id: toDoListID2, title: 'What to buy', filter: 'All'}
         ]
     )
 
     let [tasks, setTasks] = useState({
         [toDoListID1]: [
-            {id: v1(), title:'HTML&CSS', isDone: true},
-            {id: v1(), title:'JS', isDone: true},
-            {id: v1(), title:'ReactJS', isDone: false},
-            {id: v1(), title:'Rest API', isDone: false},
-            {id: v1(), title:'GraphQL', isDone: false}
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
+            {id: v1(), title: 'Rest API', isDone: false},
+            {id: v1(), title: 'GraphQL', isDone: false}
         ],
         [toDoListID2]: [
-            {id: v1(), title:'HTML&CSS2', isDone: true},
-            {id: v1(), title:'JS2', isDone: true},
-            {id: v1(), title:'ReactJS2', isDone: false},
-            {id: v1(), title:'Rest API2', isDone: false},
-            {id: v1(), title:'GraphQL2', isDone: false}
+            {id: v1(), title: 'HTML&CSS2', isDone: true},
+            {id: v1(), title: 'JS2', isDone: true},
+            {id: v1(), title: 'ReactJS2', isDone: false},
+            {id: v1(), title: 'Rest API2', isDone: false},
+            {id: v1(), title: 'GraphQL2', isDone: false}
         ]
     })
 
@@ -62,7 +68,10 @@ function App() {
         // currentTask.isDone = newIsDoneValue
         // setTasks([...tasks])
         // }
-        setTasks({...tasks,[toDoListsID]: tasks[toDoListsID].map(el => el.id === taskId ? {...el, isDone: newIsDoneValue} : el)})
+        setTasks({
+            ...tasks,
+            [toDoListsID]: tasks[toDoListsID].map(el => el.id === taskId ? {...el, isDone: newIsDoneValue} : el)
+        })
     }
 
     const addTask = (toDoListsID: string, newTitle: string) => {
@@ -71,7 +80,7 @@ function App() {
     }
 
     const removeTask = (toDoListsID: string, taskID: string) => {
-        setTasks({...tasks, [toDoListsID]: tasks[toDoListsID].filter(el=>el.id !== taskID)})
+        setTasks({...tasks, [toDoListsID]: tasks[toDoListsID].filter(el => el.id !== taskID)})
     }
 
 
@@ -81,6 +90,10 @@ function App() {
         setToDoLists(toDoLists.map(el => el.id === toDoListsID ? {...el, filter: filterValue} : el))
     }
 
+    const removeToDoList = (toDoListsID: string) => {
+        setToDoLists(toDoLists.filter(el => el.id !== toDoListsID))
+        // setToDoLists(el => el.filter(el => el.id !== toDoListsID))
+    }
     return (
 
         <div className="App">
@@ -107,6 +120,7 @@ function App() {
                         filter={el.filter}
                         addTask={addTask}
                         changeCheckBoxStatus={changeCheckBoxStatus}
+                        removeToDoList={removeToDoList}
                     />
                 )
             })}
@@ -114,5 +128,6 @@ function App() {
         </div>
     )
 }
+
 
 export default App;

@@ -13,6 +13,7 @@ type ToDoListProps = {
     filter: FilterButtonType
     addTask: (toDoListsID: string, title: string) => void
     changeCheckBoxStatus: (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => void
+    removeToDoList: (toDoListsID: string) => void
 }
 
 
@@ -43,18 +44,23 @@ export const ToDoList = (props: ToDoListProps) => {
             addTaskHandler()
         }
     }
+
     const tsarChangeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
         props.changeFilter(props.toDoListsID, filterValue)
         setColor(filterValue)
     }
 
-    const removeTaskHandler = (ToDoListsID: string, tId: string) => {
+    const removeTaskHandler = (toDoListsID: string, tId: string) => {
         props.removeTask(props.toDoListsID, tId)
     }
 
-    const changeCheckBoxStatusHandler = (ToDoListsID: string, elId:string, eventValue: boolean) => {
+    const changeCheckBoxStatusHandler = (toDoListsID: string, elId:string, eventValue: boolean) => {
         props.changeCheckBoxStatus(props.toDoListsID, elId, eventValue)
 
+    }
+
+    const removeToDoListHandler = () => {
+        props.removeToDoList(props.toDoListsID)
     }
 
 
@@ -73,7 +79,7 @@ export const ToDoList = (props: ToDoListProps) => {
     return (
 
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={() => removeToDoListHandler()}>X</button></h3>
             <div>
                 <input className={error ? styles.error : ''}
                        value={title}
