@@ -56,13 +56,13 @@ function App() {
     //     {id: v1(), title: 'React', isDone: false}
     // ])
 
-    const changeCheckBoxStatus = (taskId: string, newIsDoneValue: boolean) => {
+    const changeCheckBoxStatus = (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => {
         // let currentTask = tasks.find(el => el.id === taskId) // под капотом
         // if (currentTask) {
         // currentTask.isDone = newIsDoneValue
         // setTasks([...tasks])
         // }
-        setToDoLists(toDoLists.map(el => el.id === taskId ? {...el, isDone: newIsDoneValue} : el))
+        setTasks({...tasks,[toDoListsID]: tasks[toDoListsID].map(el => el.id === taskId ? {...el, isDone: newIsDoneValue} : el)})
     }
 
     const addTask = (toDoListsID: string, newTitle: string) => {
