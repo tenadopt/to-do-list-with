@@ -8,10 +8,10 @@ type ToDoListProps = {
     title: string
     toDoListsID: string
     tasks: Array<TaskType>
-    removeTask: (taskID: string) => void
+    removeTask: (toDoListsID: string, taskID: string) => void
     changeFilter: (toDoListsID: string, filterValue: FilterButtonType) => void
     filter: FilterButtonType
-    addTask: (title: string) => void
+    addTask: (toDoListsID: string, title: string) => void
     changeCheckBoxStatus: (taskId: string, newIsDoneValue: boolean) => void
 }
 
@@ -26,7 +26,7 @@ export const ToDoList = (props: ToDoListProps) => {
 
     const addTaskHandler = () => {
         if (title.trim() !== '') {
-            props.addTask(title.trim())
+            props.addTask(props.toDoListsID, title.trim())
             setTitle('')
         } else {
             setError('Title is required')
@@ -43,14 +43,13 @@ export const ToDoList = (props: ToDoListProps) => {
             addTaskHandler()
         }
     }
-
     const tsarChangeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
         props.changeFilter(props.toDoListsID, filterValue)
         setColor(filterValue)
     }
 
-    const removeTaskHandler = (tId: string) => {
-        props.removeTask(tId)
+    const removeTaskHandler = (toDoListsID: string, tId: string) => {
+        props.removeTask(props.toDoListsID, tId)
     }
 
     const changeCheckBoxStatusHandler = (elId:string, eventValue: boolean) => {
@@ -65,7 +64,7 @@ export const ToDoList = (props: ToDoListProps) => {
             <li key={el.id} className={el.isDone ? styles.isDone:''}>
                 <input type="checkbox" checked={el.isDone} onChange={(event)=>changeCheckBoxStatusHandler(el.id, event.currentTarget.checked)}/>
                 <span>{el.title}</span>
-                <button onClick={() => removeTaskHandler(el.id)}>X</button>
+                <button onClick={() => removeTaskHandler(el.id, el.id)}>X</button>
             </li>
         )
     })
