@@ -4,17 +4,12 @@ import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
+
 export type ToDoListsType = {
     id: string
     title: string
     filter: FilterButtonType
 }
-
-// export type toDoListID = {
-//     id: string
-//     title: string
-//     isDone: boolean
-// }
 
 export type TaskType = {
     id: string

@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState, KeyboardEvent} from "react";
 import {FilterButtonType, TaskType, ToDoListsType} from './App'
 import {Button} from "./components/Button";
 import styles from './ToDolist.module.css'
+import {Input} from "./components/Input";
 
 
 type ToDoListProps = {
@@ -17,33 +18,31 @@ type ToDoListProps = {
 }
 
 
-
-
 export const ToDoList = (props: ToDoListProps) => {
 
-    const [title, setTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
+    // const [title, setTitle] = useState('')
+    // const [error, setError] = useState<string | null>(null)
     const [color,setColor] = useState<FilterButtonType>('All')
 
-    const addTaskHandler = () => {
-        if (title.trim() !== '') {
-            props.addTask(props.toDoListsID, title.trim())
-            setTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
+    // const addTaskHandler = () => {
+    //     if (title.trim() !== '') {
+    //         props.addTask(props.toDoListsID, title.trim())
+    //         setTitle('')
+    //     } else {
+    //         setError('Title is required')
+    //     }
+    // }
 
-    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
-        setTitle(event.currentTarget.value)
-    }
+    // const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    //     setError(null)
+    //     setTitle(event.currentTarget.value)
+    // }
 
-    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            addTaskHandler()
-        }
-    }
+    // const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    //     if (event.key === 'Enter') {
+    //         addTaskHandler()
+    //     }
+    // }
 
     const tsarChangeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
         props.changeFilter(props.toDoListsID, filterValue)
@@ -80,13 +79,14 @@ export const ToDoList = (props: ToDoListProps) => {
 
         <div>
             <h3>{props.title} <button onClick={() => removeToDoListHandler()}>X</button></h3>
-            <div>
-                <input className={error ? styles.error : ''}
-                       value={title}
-                       onChange={onChangeHandler}
-                       onKeyUp={onKeyPressHandler}/>
-                <button onClick={addTaskHandler}>+</button>
-            </div>
+            <Input callBack={props.addTask()}/>
+            {/*<div>*/}
+            {/*    <input className={error ? styles.error : ''}*/}
+            {/*           value={title}*/}
+            {/*           onChange={onChangeHandler}*/}
+            {/*           onKeyUp={onKeyPressHandler}/>*/}
+            {/*    <button onClick={addTaskHandler}>+</button>*/}
+            {/*</div>*/}
             {error && <div className={styles.errorMessage}>{error}</div>}
             <ul>
                 {mapTasks}
