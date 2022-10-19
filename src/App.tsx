@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
+import {Input} from "./components/Input";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
@@ -93,9 +94,18 @@ function App() {
         //    another syntaxis version
     }
 
+    const addToDoList = (newTitle: string) => {
+        const newToDolistID = v1();
+        const newToDoLists: ToDoListsType = {id: newToDolistID, title: newTitle, filter: 'All'}
+        setToDoLists([newToDoLists, ...toDoLists])
+        setTasks({...tasks,[newToDolistID]: []})
+    }
+
     return (
 
         <div className="App">
+            <Input callBack={addToDoList}/>
+
             {toDoLists.map(el => {
 
                 let tasksForToDolist = tasks[el.id]
