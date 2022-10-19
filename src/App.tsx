@@ -98,12 +98,24 @@ function App() {
         const newToDolistID = v1();
         const newToDoLists: ToDoListsType = {id: newToDolistID, title: newTitle, filter: 'All'}
         setToDoLists([newToDoLists, ...toDoLists])
-        setTasks({...tasks,[newToDolistID]: []})
+        setTasks({
+            ...tasks, [newToDolistID]: [
+                {id: v1(), title: 'HTML&CSS2', isDone: true},
+                {id: v1(), title: 'JS2', isDone: true},
+                {id: v1(), title: 'ReactJS2', isDone: false}]
+        })
     }
 
+    const changeTask = (toDoListID: string, taskID: string, currentTitle: string) => {
+        setTasks({
+                ...tasks, [toDoListID]: tasks[toDoListID].map(el => el.id === taskID ? {...el, title: currentTitle} : el)
+            }
+        )
+    }
     return (
 
         <div className="App">
+
             <Input callBack={addToDoList}/>
 
             {toDoLists.map(el => {
@@ -130,6 +142,7 @@ function App() {
                         addTask={addTask}
                         changeCheckBoxStatus={changeCheckBoxStatus}
                         removeToDoList={removeToDoList}
+                        changeTask={changeTask}
                     />
                 )
             })}

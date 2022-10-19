@@ -3,6 +3,7 @@ import {FilterButtonType, TaskType, ToDoListsType} from './App'
 import {Button} from "./components/Button";
 import styles from './ToDolist.module.css'
 import {Input} from "./components/Input";
+import {EditableSpan} from "./components/EditableSpan";
 
 
 type ToDoListProps = {
@@ -15,6 +16,7 @@ type ToDoListProps = {
     addTask: (toDoListsID: string, title: string) => void
     changeCheckBoxStatus: (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => void
     removeToDoList: (toDoListsID: string) => void
+    changeTask: (toDoListID: string, taskID: string, currentTitle: string) => void
 }
 
 
@@ -22,7 +24,7 @@ export const ToDoList = (props: ToDoListProps) => {
 
     // const [title, setTitle] = useState('')
     // const [error, setError] = useState<string | null>(null)
-    const [color,setColor] = useState<FilterButtonType>('All')
+    const [color, setColor] = useState<FilterButtonType>('All')
 
     // const addTaskHandler = () => {
     //     if (title.trim() !== '') {
@@ -53,7 +55,7 @@ export const ToDoList = (props: ToDoListProps) => {
         props.removeTask(props.toDoListsID, tId)
     }
 
-    const changeCheckBoxStatusHandler = (toDoListsID: string, elId:string, eventValue: boolean) => {
+    const changeCheckBoxStatusHandler = (toDoListsID: string, elId: string, eventValue: boolean) => {
         props.changeCheckBoxStatus(props.toDoListsID, elId, eventValue)
 
     }
@@ -65,43 +67,42 @@ export const ToDoList = (props: ToDoListProps) => {
 
     const mapTasks = props.tasks.map(el => {
 
+        const changeTaskHandler = (currentTitle: string) => {
+            props.changeTask(props.toDoListsID, el.id, currentTitle)
+        }
+
         return (
-            <li key={el.id} className={el.isDone ? styles.isDone:''}>
-                <input type="checkbox" checked={el.isDone} onChange={(event)=>changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)}/>
-                <span>{el.title}</span>
+            <li key={el.id} className={el.isDone ? styles.isDone : ''}>
+                <input type="checkbox" checked={el.isDone}
+                       onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)}/>
+                <EditableSpan editableTitle={el.title} callBack={changeTaskHandler}/>
                 <button onClick={() => removeTaskHandler(el.id, el.id)}>X</button>
             </li>
         )
     })
 
     const addTaskHandler = (newTitle: string) => {
-        props.addTask(props.toDoListsID, newTitle )
+        props.addTask(props.toDoListsID, newTitle)
     }
 
     return (
 
         <div>
-            <h3>{props.title} <button onClick={() => removeToDoListHandler()}>X</button></h3>
+            <h3>{props.title}
+                <button onClick={() => removeToDoListHandler()}>X</button>
+            </h3>
             <Input callBack={addTaskHandler}/>
-            {/*<div>*/}
-            {/*    <input className={error ? styles.error : ''}*/}
-            {/*           value={title}*/}
-            {/*           onChange={onChangeHandler}*/}
-            {/*           onKeyUp={onKeyPressHandler}/>*/}
-            {/*    <button onClick={addTaskHandler}>+</button>*/}
-            {/*</div>*/}
-            {/*{error && <div className={styles.errorMessage}>{error}</div>}*/}
             <ul>
                 {mapTasks}
             </ul>
             <Button color={color} name={'All'} callBack={() => {
-                tsarChangeFilter(props.toDoListsID,'All')
+                tsarChangeFilter(props.toDoListsID, 'All')
             }}/>
             <Button color={color} name={'Active'} callBack={() => {
-                tsarChangeFilter(props.toDoListsID,'Active')
+                tsarChangeFilter(props.toDoListsID, 'Active')
             }}/>
             <Button color={color} name={'Completed'} callBack={() => {
-                tsarChangeFilter(props.toDoListsID,'Completed')
+                tsarChangeFilter(props.toDoListsID, 'Completed')
             }}/>
         </div>
     )
