@@ -77,8 +77,9 @@ function App() {
 
     const removeToDoList = (toDoListsID: string) => {
         setToDoLists(toDoLists.filter(el => el.id !== toDoListsID))
-        delete tasks[toDoListsID]
-        console.log(tasks);
+        const deleteTasks = Object.fromEntries(Object.entries(tasks).filter(([key]) => key !== toDoListsID))
+        setTasks(deleteTasks)
+        // delete tasks[toDoListsID] // hardcore delete
         // setToDoLists(el => el.filter(el => el.id !== toDoListsID))
         //    another syntaxis version
     }
