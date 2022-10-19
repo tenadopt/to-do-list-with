@@ -2,10 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import styles from "../ToDolist.module.css";
 
 type InputPropsType = {
-    callBack: () => void
-    toDoListsID: string
-    title: string
-    id: string
+    callBack: (newTitle: string) => void
 }
 
 export const Input = (props: InputPropsType) => {
@@ -19,13 +16,14 @@ export const Input = (props: InputPropsType) => {
 
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            addTaskHandler()
+            addTask()
         }
     }
 
-    const addTaskHandler  = () => {
-        if (title.trim() !== '') {
-            props.addTask(props.toDoListsID, title.trim())
+    const addTask  = () => {
+        let newTitle = title.trim();
+        if (newTitle !== '') {
+            props.callBack(newTitle)
             setTitle('')
         } else {
             setError('Title is required')
@@ -38,7 +36,8 @@ export const Input = (props: InputPropsType) => {
                    value={title}
                    onChange={onChangeHandler}
                    onKeyUp={onKeyPressHandler}/>
-            <button onClick={addTaskHandler}>+</button>
+            <button onClick={addTask}>+</button>
+            {error && <div className={styles.errorMessage}>{error}</div>}
         </div>
     );
 };

@@ -74,12 +74,15 @@ export const ToDoList = (props: ToDoListProps) => {
         )
     })
 
+    const addTaskHandler = (newTitle: string) => {
+        props.addTask(props.toDoListsID, newTitle )
+    }
 
     return (
 
         <div>
             <h3>{props.title} <button onClick={() => removeToDoListHandler()}>X</button></h3>
-            <Input callBack={props.addTask()}/>
+            <Input callBack={addTaskHandler}/>
             {/*<div>*/}
             {/*    <input className={error ? styles.error : ''}*/}
             {/*           value={title}*/}
@@ -87,7 +90,7 @@ export const ToDoList = (props: ToDoListProps) => {
             {/*           onKeyUp={onKeyPressHandler}/>*/}
             {/*    <button onClick={addTaskHandler}>+</button>*/}
             {/*</div>*/}
-            {error && <div className={styles.errorMessage}>{error}</div>}
+            {/*{error && <div className={styles.errorMessage}>{error}</div>}*/}
             <ul>
                 {mapTasks}
             </ul>
