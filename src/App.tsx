@@ -28,6 +28,7 @@ function App() {
             {id: toDoListID2, title: 'What to buy', filter: 'All'}
         ]
     )
+    console.log(toDoLists);
 
     let [tasks, setTasks] = useState({
         [toDoListID1]: [
@@ -45,18 +46,6 @@ function App() {
             {id: v1(), title: 'GraphQL2', isDone: false}
         ]
     })
-
-    // let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
-    //         {id: v1(), title: 'What to learn', filter: 'All'},
-    //         {id: v1(), title: 'What to buy', filter: 'Active'}
-    //     ]
-    // )
-    //
-    // const [tasks, setTasks] = useState([
-    //     {id: v1(), title: 'HTML&CSS', isDone: true},
-    //     {id: v1(), title: 'JS', isDone: true},
-    //     {id: v1(), title: 'React', isDone: false}
-    // ])
 
     const changeCheckBoxStatus = (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => {
         // let currentTask = tasks.find(el => el.id === taskId) // под капотом
@@ -112,6 +101,12 @@ function App() {
             }
         )
     }
+
+
+    const changeToDoList = (id: string, toDoListTitle: string) => {
+        setToDoLists(toDoLists.map(el=>el.id === id ? {...el, title: toDoListTitle} : el))
+    }
+
     return (
 
         <div className="App">
@@ -143,6 +138,7 @@ function App() {
                         changeCheckBoxStatus={changeCheckBoxStatus}
                         removeToDoList={removeToDoList}
                         changeTask={changeTask}
+                        changeToDoList={changeToDoList}
                     />
                 )
             })}

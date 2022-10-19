@@ -17,6 +17,7 @@ type ToDoListProps = {
     changeCheckBoxStatus: (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => void
     removeToDoList: (toDoListsID: string) => void
     changeTask: (toDoListID: string, taskID: string, currentTitle: string) => void
+    changeToDoList: (id: string, toDoListTitle: string)=> void
 }
 
 
@@ -64,18 +65,21 @@ export const ToDoList = (props: ToDoListProps) => {
         props.removeToDoList(props.toDoListsID)
     }
 
+    const changeTaskHandler = (id: string, currentTitle: string) => {
+        props.changeTask(props.toDoListsID, id , currentTitle)
+    }
 
     const mapTasks = props.tasks.map(el => {
 
-        const changeTaskHandler = (currentTitle: string) => {
-            props.changeTask(props.toDoListsID, el.id, currentTitle)
-        }
+        // const changeTaskHandler = (currentTitle: string) => {
+        //     props.changeTask(props.toDoListsID, el.id, currentTitle)
+        // }
 
         return (
             <li key={el.id} className={el.isDone ? styles.isDone : ''}>
                 <input type="checkbox" checked={el.isDone}
                        onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)}/>
-                <EditableSpan editableTitle={el.title} callBack={changeTaskHandler}/>
+                <EditableSpan editableTitle={el.title} callBack={(newTitle)=>changeTaskHandler(el.id, newTitle)}/>
                 <button onClick={() => removeTaskHandler(el.id, el.id)}>X</button>
             </li>
         )
@@ -85,10 +89,16 @@ export const ToDoList = (props: ToDoListProps) => {
         props.addTask(props.toDoListsID, newTitle)
     }
 
+    const changeToDoListHandler = (currentToDoListTitle: string) => {
+        return (
+            props.changeToDoList(props.toDoListsID, currentToDoListTitle)
+        )
+    }
+
     return (
 
         <div>
-            <h3>{props.title}
+            <h3><EditableSpan editableTitle={props.title} callBack={changeToDoListHandler}/>
                 <button onClick={() => removeToDoListHandler()}>X</button>
             </h3>
             <Input callBack={addTaskHandler}/>
