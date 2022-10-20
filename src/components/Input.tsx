@@ -1,5 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import styles from "../ToDolist.module.css";
+// import {Button} from "@mui/material";
+import {Button} from "../components/Button";
 
 type InputPropsType = {
     callBack: (newTitle: string) => void
@@ -21,6 +23,7 @@ export const Input = (props: InputPropsType) => {
     }
 
     const addTask  = () => {
+        console.log('dsadfada')
         let newTitle = title.trim();
         if (newTitle !== '') {
             props.callBack(newTitle)
@@ -36,7 +39,8 @@ export const Input = (props: InputPropsType) => {
                    value={title}
                    onChange={onChangeHandler}
                    onKeyUp={onKeyPressHandler}/>
-            <button onClick={addTask}>+</button>
+            {/*<button onClick={addTask}>+</button>*/}
+            <Button appearance='blue' onClick={addTask}>+</Button>
             {error && <div className={styles.errorMessage}>{error}</div>}
         </div>
     );

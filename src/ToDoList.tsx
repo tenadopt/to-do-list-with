@@ -4,7 +4,9 @@ import {Button} from "./components/Button";
 import styles from './ToDolist.module.css'
 import {Input} from "./components/Input";
 import {EditableSpan} from "./components/EditableSpan";
-
+import {IconButton} from "@mui/material";
+import {ReactComponent as TrashIcon} from "../src/images/trashIcon.svg";
+// import DeleteIcon from '@mui/icons-material/Delete';
 
 type ToDoListProps = {
     title: string
@@ -80,7 +82,10 @@ export const ToDoList = (props: ToDoListProps) => {
                 <input type="checkbox" checked={el.isDone}
                        onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)}/>
                 <EditableSpan editableTitle={el.title} callBack={(newTitle)=>changeTaskHandler(el.id, newTitle)}/>
-                <button onClick={() => removeTaskHandler(el.id, el.id)}>X</button>
+                <Button appearance='icon' onClick={() => removeTaskHandler(el.id, el.id)}>
+                    {/*<DeleteIcon />*/}
+                    <TrashIcon style={{width: '20px', height: '20px'}}/>
+                </Button>
             </li>
         )
     })
@@ -99,19 +104,23 @@ export const ToDoList = (props: ToDoListProps) => {
 
         <div>
             <h3><EditableSpan editableTitle={props.title} callBack={changeToDoListHandler}/>
-                <button onClick={() => removeToDoListHandler()}>X</button>
+                {/*<Button onClick={() => removeToDoListHandler()}>X</Button>*/}
+                <IconButton aria-label="delete" onClick={() => removeToDoListHandler()}>
+                    {/*<DeleteIcon />*/}
+                    <TrashIcon style={{width: '20px', height: '20px'}}/>
+                </IconButton>
             </h3>
             <Input callBack={addTaskHandler}/>
             <ul>
                 {mapTasks}
             </ul>
-            <Button color={color} name={'All'} callBack={() => {
+            <Button color={color} name={'All'} onClick={() => {
                 tsarChangeFilter(props.toDoListsID, 'All')
             }}/>
-            <Button color={color} name={'Active'} callBack={() => {
+            <Button color={color} name={'Active'} onClick={() => {
                 tsarChangeFilter(props.toDoListsID, 'Active')
             }}/>
-            <Button color={color} name={'Completed'} callBack={() => {
+            <Button color={color} name={'Completed'} onClick={() => {
                 tsarChangeFilter(props.toDoListsID, 'Completed')
             }}/>
         </div>
