@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
-import {Input} from "./components/Input";
+import {InputOld} from "./components/InputOld";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
@@ -112,7 +112,7 @@ function App() {
 
         <div className="App">
 
-            <Input callBack={addToDoList}/>
+            <InputOld callBack={addToDoList}/>
 
             {toDoLists.map(el => {
 

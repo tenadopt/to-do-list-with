@@ -1,13 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import styles from "../ToDolist.module.css";
-// import {Button} from "@mui/material";
-import {Button} from "../components/Button";
+import {Button} from "./Button";
+import {Input} from './Input/Input'
 
 type InputPropsType = {
     callBack: (newTitle: string) => void
 }
 
-export const Input = (props: InputPropsType) => {
+export const InputOld = (props: InputPropsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -22,7 +22,7 @@ export const Input = (props: InputPropsType) => {
         }
     }
 
-    const addTask  = () => {
+    const addTask = () => {
         console.log('dsadfada')
         let newTitle = title.trim();
         if (newTitle !== '') {
@@ -35,11 +35,12 @@ export const Input = (props: InputPropsType) => {
 
     return (
         <div>
-            <input className={error ? styles.error : ''}
-                   value={title}
-                   onChange={onChangeHandler}
-                   onKeyUp={onKeyPressHandler}/>
-            {/*<button onClick={addTask}>+</button>*/}
+            <Input
+                type='text'
+                error={!!error}
+                value={title}
+                onChange={onChangeHandler}
+                onKeyUp={onKeyPressHandler}/>
             <Button appearance='blue' onClick={addTask}>+</Button>
             {error && <div className={styles.errorMessage}>{error}</div>}
         </div>

@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState, KeyboardEvent} from "react";
 import {FilterButtonType, TaskType, ToDoListsType} from './App'
 import {Button} from "./components/Button";
 import styles from './ToDolist.module.css'
-import {Input} from "./components/Input";
+import {InputOld} from "./components/InputOld";
 import {EditableSpan} from "./components/EditableSpan";
 import {IconButton} from "@mui/material";
 import {ReactComponent as TrashIcon} from "../src/images/trashIcon.svg";
@@ -110,7 +110,7 @@ export const ToDoList = (props: ToDoListProps) => {
                     <TrashIcon style={{width: '20px', height: '20px'}}/>
                 </IconButton>
             </h3>
-            <Input callBack={addTaskHandler}/>
+            <InputOld callBack={addTaskHandler}/>
             <ul>
                 {mapTasks}
             </ul>
