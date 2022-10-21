@@ -8,11 +8,6 @@ interface IButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes <HTMLButto
     color?: FilterButtonType
     appearance?: 'primary' | 'green' | 'icon' | 'blue'
 }
-// type PropsType = {
-//     name: string
-//     callBack: () => void
-//     color:FilterButtonType
-// }
 
 export const Button: FC<PropsWithChildren<IButtonProps>> = (props ) => {
     const {name, children, color, className, appearance = 'primary',  ...restProps} = props;
@@ -25,7 +20,5 @@ export const Button: FC<PropsWithChildren<IButtonProps>> = (props ) => {
             [styles.blue]: appearance === 'blue',
         })}
                 {...restProps}>{name || children}</button>
-
-        // <button className={props.color === props.name ? styles.activeFilter:''}>{props.name}</button>
     )
 }
