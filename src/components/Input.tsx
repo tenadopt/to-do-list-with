@@ -1,5 +1,7 @@
+import Button from "@mui/material/Button";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import styles from "../ToDolist.module.css";
+import TextField from "@mui/material/TextField";
 
 type InputPropsType = {
     callBack: (newTitle: string) => void
@@ -7,10 +9,10 @@ type InputPropsType = {
 
 export const Input = (props: InputPropsType) => {
     const [title, setTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<boolean>(false)
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        setError(false)
         setTitle(event.currentTarget.value)
     }
 
@@ -26,17 +28,23 @@ export const Input = (props: InputPropsType) => {
             props.callBack(newTitle)
             setTitle('')
         } else {
-            setError('Title is required')
+            setError(true)
         }
     }
 
     return (
         <div>
-            <input className={error ? styles.error : ''}
-                   value={title}
-                   onChange={onChangeHandler}
-                   onKeyUp={onKeyPressHandler}/>
-            <button onClick={addTask}>+</button>
+            <TextField
+                error={error}
+                size={"small"}
+                value={title}
+                onChange={onChangeHandler}
+                onKeyUp={onKeyPressHandler}
+                id="outlined-basic"
+                label={error ? "Title is required" : "Outlined"}
+                variant="outlined"
+            />
+            <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" onClick={addTask}>+</Button>
             {error && <div className={styles.errorMessage}>{error}</div>}
         </div>
     );

@@ -1,10 +1,11 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from "react";
 import {FilterButtonType, TaskType, ToDoListsType} from './App'
-import {Button} from "./components/Button";
+import {ButtonUniv} from "./components/ButtonUniv";
 import styles from './ToDolist.module.css'
 import {Input} from "./components/Input";
 import {EditableSpan} from "./components/EditableSpan";
-
+import {Checkbox, IconButton} from "@mui/material";
+import {Delete} from '@mui/icons-material'
 
 type ToDoListProps = {
     title: string
@@ -17,15 +18,13 @@ type ToDoListProps = {
     changeCheckBoxStatus: (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => void
     removeToDoList: (toDoListsID: string) => void
     changeTask: (toDoListID: string, taskID: string, currentTitle: string) => void
-    changeToDoList: (id: string, toDoListTitle: string)=> void
+    changeToDoList: (id: string, toDoListTitle: string) => void
 }
-
-
 export const ToDoList = (props: ToDoListProps) => {
 
     // const [title, setTitle] = useState('')
     // const [error, setError] = useState<string | null>(null)
-    const [color, setColor] = useState<FilterButtonType>('All')
+    const [colorActive, setColorActive] = useState<FilterButtonType>('All')
 
     // const addTaskHandler = () => {
     //     if (title.trim() !== '') {
@@ -49,7 +48,7 @@ export const ToDoList = (props: ToDoListProps) => {
 
     const tsarChangeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
         props.changeFilter(props.toDoListsID, filterValue)
-        setColor(filterValue)
+        setColorActive(filterValue)
     }
 
     const removeTaskHandler = (toDoListsID: string, tId: string) => {
@@ -66,7 +65,7 @@ export const ToDoList = (props: ToDoListProps) => {
     }
 
     const changeTaskHandler = (id: string, currentTitle: string) => {
-        props.changeTask(props.toDoListsID, id , currentTitle)
+        props.changeTask(props.toDoListsID, id, currentTitle)
     }
 
     const mapTasks = props.tasks.map(el => {
@@ -77,10 +76,11 @@ export const ToDoList = (props: ToDoListProps) => {
 
         return (
             <li key={el.id} className={el.isDone ? styles.isDone : ''}>
-                <input type="checkbox" checked={el.isDone}
-                       onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)}/>
-                <EditableSpan editableTitle={el.title} callBack={(newTitle)=>changeTaskHandler(el.id, newTitle)}/>
-                <button onClick={() => removeTaskHandler(el.id, el.id)}>X</button>
+                <Checkbox checked={el.isDone} onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)} defaultChecked />
+                <EditableSpan editableTitle={el.title} callBack={(newTitle) => changeTaskHandler(el.id, newTitle)}/>
+                <IconButton aria-label="delete" onClick={() => removeTaskHandler(el.id, el.id)}>
+                    <Delete/>
+                </IconButton>
             </li>
         )
     })
@@ -99,19 +99,22 @@ export const ToDoList = (props: ToDoListProps) => {
 
         <div>
             <h3><EditableSpan editableTitle={props.title} callBack={changeToDoListHandler}/>
-                <button onClick={() => removeToDoListHandler()}>X</button>
+                {/*<button onClick={() => removeToDoListHandler()}>X</button>*/}
+                <IconButton aria-label="delete" onClick={() => removeToDoListHandler()}>
+                    <Delete/>
+                </IconButton>
             </h3>
             <Input callBack={addTaskHandler}/>
             <ul>
                 {mapTasks}
             </ul>
-            <Button color={color} name={'All'} callBack={() => {
+            <ButtonUniv colorActive={colorActive} name={'All'} color={"success"} callBack={() => {
                 tsarChangeFilter(props.toDoListsID, 'All')
             }}/>
-            <Button color={color} name={'Active'} callBack={() => {
+            <ButtonUniv colorActive={colorActive} name={'Active'} color={"secondary"} callBack={() => {
                 tsarChangeFilter(props.toDoListsID, 'Active')
             }}/>
-            <Button color={color} name={'Completed'} callBack={() => {
+            <ButtonUniv colorActive={colorActive} name={'Completed'} color={"inherit"} callBack={() => {
                 tsarChangeFilter(props.toDoListsID, 'Completed')
             }}/>
         </div>

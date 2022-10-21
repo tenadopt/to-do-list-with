@@ -3,6 +3,7 @@ import './App.css';
 import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
 import {Input} from "./components/Input";
+import {ButtonAppBar} from "./components/ButtonAppBar";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
@@ -105,12 +106,14 @@ function App() {
 
 
     const changeToDoList = (id: string, toDoListTitle: string) => {
-        setToDoLists(toDoLists.map(el=>el.id === id ? {...el, title: toDoListTitle} : el))
+        setToDoLists(toDoLists.map(el => el.id === id ? {...el, title: toDoListTitle} : el))
     }
 
     return (
 
         <div className="App">
+
+            <ButtonAppBar/>
 
             <Input callBack={addToDoList}/>
 
