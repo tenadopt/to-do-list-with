@@ -4,6 +4,7 @@ import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
 import {Input} from "./components/Input";
 import {ButtonAppBar} from "./components/ButtonAppBar";
+import {Container, Grid, Paper} from "@mui/material";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
@@ -115,38 +116,45 @@ function App() {
 
             <ButtonAppBar/>
 
-            <Input callBack={addToDoList}/>
+            <Container fixed>
+                <Grid container style={{padding: '20px'}}>
+                    <Input callBack={addToDoList}/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {toDoLists.map(el => {
 
-            {toDoLists.map(el => {
+                        let tasksForToDolist = tasks[el.id]
 
-                let tasksForToDolist = tasks[el.id]
+                        if (el.filter === 'Active') {
+                            tasksForToDolist = tasks[el.id].filter(el => !el.isDone)
+                        }
 
-                if (el.filter === 'Active') {
-                    tasksForToDolist = tasks[el.id].filter(el => !el.isDone)
-                }
+                        if (el.filter === 'Completed') {
+                            tasksForToDolist = tasks[el.id].filter(el => el.isDone)
+                        }
 
-                if (el.filter === 'Completed') {
-                    tasksForToDolist = tasks[el.id].filter(el => el.isDone)
-                }
-
-                return (
-                    <ToDoList
-                        key={el.id}
-                        title={el.title}
-                        toDoListsID={el.id}
-                        tasks={tasksForToDolist}
-                        removeTask={removeTask}
-                        changeFilter={changeFilter}
-                        filter={el.filter}
-                        addTask={addTask}
-                        changeCheckBoxStatus={changeCheckBoxStatus}
-                        removeToDoList={removeToDoList}
-                        changeTask={changeTask}
-                        changeToDoList={changeToDoList}
-                    />
-                )
-            })}
-
+                        return (<Grid item>
+                                <Paper style={{padding: '10px'}}>
+                                    <ToDoList
+                                        key={el.id}
+                                        title={el.title}
+                                        toDoListsID={el.id}
+                                        tasks={tasksForToDolist}
+                                        removeTask={removeTask}
+                                        changeFilter={changeFilter}
+                                        filter={el.filter}
+                                        addTask={addTask}
+                                        changeCheckBoxStatus={changeCheckBoxStatus}
+                                        removeToDoList={removeToDoList}
+                                        changeTask={changeTask}
+                                        changeToDoList={changeToDoList}
+                                    />
+                                </Paper>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+            </Container>
         </div>
     )
 }
