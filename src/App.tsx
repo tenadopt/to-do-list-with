@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import {ToDoList} from "./ToDoList";
 import {v1} from "uuid";
 import {Input} from "./components/Input";
 import {ButtonAppBar} from "./components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
+import {addTaskAC, tasksReducer} from "./reducers/tasksReducer";
+import {toDoListsReducer} from "./state/toDoListsReducer";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
@@ -25,29 +27,52 @@ function App() {
     let toDoListID1 = v1();
     let toDoListID2 = v1();
 
-    let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
+    // let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
+    //         {id: toDoListID1, title: 'What to learn', filter: 'All'},
+    //         {id: toDoListID2, title: 'What to buy', filter: 'All'}
+    //     ]
+    // )
+    // console.log(toDoLists);
+
+    // let [tasks, setTasks] = useState({
+    //     [toDoListID1]: [
+    //         {id: v1(), title: 'HTML&CSS', isDone: true},
+    //         {id: v1(), title: 'JS', isDone: true},
+    //         {id: v1(), title: 'ReactJS', isDone: false},
+    //         {id: v1(), title: 'Rest API', isDone: false},
+    //         {id: v1(), title: 'GraphQL', isDone: false}
+    //     ],
+    //     [toDoListID2]: [
+    //         {id: v1(), title: 'HTML&CSS2', isDone: true},
+    //         {id: v1(), title: 'JS2', isDone: true},
+    //         {id: v1(), title: 'ReactJS2', isDone: false},
+    //         {id: v1(), title: 'Rest API2', isDone: false},
+    //         {id: v1(), title: 'GraphQL2', isDone: false}
+    //     ]
+    // })
+
+    let [toDoLists, toDoListsDispatch] = useReducer(toDoListsReducer, [
             {id: toDoListID1, title: 'What to learn', filter: 'All'},
             {id: toDoListID2, title: 'What to buy', filter: 'All'}
-        ]
-    )
-    console.log(toDoLists);
+        ])
 
-    let [tasks, setTasks] = useState({
-        [toDoListID1]: [
-            {id: v1(), title: 'HTML&CSS', isDone: true},
-            {id: v1(), title: 'JS', isDone: true},
-            {id: v1(), title: 'ReactJS', isDone: false},
-            {id: v1(), title: 'Rest API', isDone: false},
-            {id: v1(), title: 'GraphQL', isDone: false}
-        ],
-        [toDoListID2]: [
-            {id: v1(), title: 'HTML&CSS2', isDone: true},
-            {id: v1(), title: 'JS2', isDone: true},
-            {id: v1(), title: 'ReactJS2', isDone: false},
-            {id: v1(), title: 'Rest API2', isDone: false},
-            {id: v1(), title: 'GraphQL2', isDone: false}
-        ]
-    })
+    let [tasks, taskDispatch] = useReducer(tasksReducer,
+            { [toDoListID1]: [
+                {id: v1(), title: 'HTML&CSS', isDone: true},
+                {id: v1(), title: 'JS', isDone: true},
+                {id: v1(), title: 'ReactJS', isDone: false},
+                {id: v1(), title: 'Rest API', isDone: false},
+                {id: v1(), title: 'GraphQL', isDone: false}
+            ],
+            [toDoListID2]: [
+                {id: v1(), title: 'HTML&CSS2', isDone: true},
+                {id: v1(), title: 'JS2', isDone: true},
+                {id: v1(), title: 'ReactJS2', isDone: false},
+                {id: v1(), title: 'Rest API2', isDone: false},
+                {id: v1(), title: 'GraphQL2', isDone: false}
+            ]
+}
+    )
 
     const changeCheckBoxStatus = (toDoListsID: string, taskId: string, newIsDoneValue: boolean) => {
         // let currentTask = tasks.find(el => el.id === taskId) // под капотом
@@ -55,19 +80,21 @@ function App() {
         // currentTask.isDone = newIsDoneValue
         // setTasks([...tasks])
         // }
-        setTasks({
+        taskDispatch({
             ...tasks,
             [toDoListsID]: tasks[toDoListsID].map(el => el.id === taskId ? {...el, isDone: newIsDoneValue} : el)
         })
     }
 
     const addTask = (toDoListsID: string, newTitle: string) => {
-        const newTask = {id: v1(), title: newTitle, isDone: false}
-        setTasks({...tasks, [toDoListsID]: [newTask, ...tasks[toDoListsID]]})
+        // const newTask = {id: v1(), title: newTitle, isDone: false}
+        // setTasks({...tasks, [toDoListsID]: [newTask, ...tasks[toDoListsID]]})
+        taskDispatch(addTaskAC(toDoListsID, newTitle))
     }
 
     const removeTask = (toDoListsID: string, taskID: string) => {
-        setTasks({...tasks, [toDoListsID]: tasks[toDoListsID].filter(el => el.id !== taskID)})
+        // setTasks({...tasks, [toDoListsID]: tasks[toDoListsID].filter(el => el.id !== taskID)})
+        taskDispatch(removeTaskAC(toDoListsID, id))
     }
 
 

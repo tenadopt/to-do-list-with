@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from "react";
+import React, {ChangeEvent, useState, KeyboardEvent, useReducer} from "react";
 import {FilterButtonType, TaskType, ToDoListsType} from './App'
 import {ButtonUniv} from "./components/ButtonUniv";
 import styles from './ToDolist.module.css'
@@ -6,6 +6,7 @@ import {Input} from "./components/Input";
 import {EditableSpan} from "./components/EditableSpan";
 import {Checkbox, IconButton} from "@mui/material";
 import {Delete} from '@mui/icons-material'
+import {filterReducer, filterReducerAC} from "./reducers/filterReducer";
 
 type ToDoListProps = {
     title: string
@@ -24,7 +25,9 @@ export const ToDoList = (props: ToDoListProps) => {
 
     // const [title, setTitle] = useState('')
     // const [error, setError] = useState<string | null>(null)
-    const [colorActive, setColorActive] = useState<FilterButtonType>('All')
+    // const [colorActive, setColorActive] = useState<FilterButtonType>('All')
+    const [colorActive, colorActiveDispatch] = useReducer(filterReducer, 'All')
+
 
     // const addTaskHandler = () => {
     //     if (title.trim() !== '') {
@@ -48,7 +51,8 @@ export const ToDoList = (props: ToDoListProps) => {
 
     const tsarChangeFilter = (toDoListsID: string, filterValue: FilterButtonType) => {
         props.changeFilter(props.toDoListsID, filterValue)
-        setColorActive(filterValue)
+        // setColorActive(filterValue)
+        colorActiveDispatch(filterReducerAC(filterValue))
     }
 
     const removeTaskHandler = (toDoListsID: string, tId: string) => {
@@ -76,7 +80,9 @@ export const ToDoList = (props: ToDoListProps) => {
 
         return (
             <li key={el.id} className={el.isDone ? styles.isDone : ''}>
-                <Checkbox checked={el.isDone} onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)} defaultChecked />
+                <Checkbox checked={el.isDone}
+                          onChange={(event) => changeCheckBoxStatusHandler(props.toDoListsID, el.id, event.currentTarget.checked)}
+                          defaultChecked/>
                 <EditableSpan editableTitle={el.title} callBack={(newTitle) => changeTaskHandler(el.id, newTitle)}/>
                 <IconButton aria-label="delete" onClick={() => removeTaskHandler(el.id, el.id)}>
                     <Delete/>
