@@ -3,7 +3,7 @@ import {v1} from "uuid";
 import {FilterButtonType} from "../App";
 
 
-export const tasksReducer = (state: Array<TaskType>, action: tsarType) => {
+export const tasksReducer = (state: Array<TaskType>, action: ActionsType) => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             return state.filter(el => el.id !== action.payload.id)
@@ -16,7 +16,7 @@ export const tasksReducer = (state: Array<TaskType>, action: tsarType) => {
     }
 }
 
-type tsarType = removeTaskACType | addTaskACType;
+type ActionsType = removeTaskACType | addTaskACType;
 
 type removeTaskACType = ReturnType<typeof removeTaskAC>;
 
