@@ -172,6 +172,7 @@ function App() {
                                         removeToDoList={removeToDoList}
                                         changeTask={changeTask}
                                         changeToDoList={changeToDoList}
+                                        // addToDoList={addToDoList}
                                     />
                                 </Paper>
                             </Grid>
