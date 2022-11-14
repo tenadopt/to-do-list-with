@@ -6,7 +6,7 @@ import {Input} from "./components/Input";
 import {ButtonAppBar} from "./components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 // import {addTaskAC, tasksReducer} from "./state/tasksReducer";
-// import {toDoListsReducer} from "./state/toDoListsReducer";
+// import {todolistsReducer} from "./state/todolistsReducer";
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
@@ -21,6 +21,11 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
+
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
 
 function App() {
 
@@ -51,7 +56,7 @@ function App() {
         ]
     })
 
-    // let [toDoLists, dispatchToTodolist] = useReducer(toDoListsReducer, [
+    // let [toDoLists, dispatchToTodolist] = useReducer(todolistsReducer, [
     //     {id: toDoListID1, title: 'What to learn', filter: 'All'},
     //     {id: toDoListID2, title: 'What to buy', filter: 'All'}
     // ])
