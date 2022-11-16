@@ -8,16 +8,22 @@ import {
     todolistsReducer
 } from './todolists-reducer'
 
+let toDoListID1: string;
+let toDoListID2: string;
 
+let startState: Array<ToDoListsType>
 
-test('correct todolist should be removed', ()=>{
+beforeEach(() => {
     let toDoListID1 = v1();
     let toDoListID2 = v1();
 
-    const startState: ToDoListsType[] = [
+    const startState = [
         {id: toDoListID1, title: 'What to learn', filter: 'All'},
         {id: toDoListID2, title: 'What to buy', filter: 'All'}
     ]
+})
+
+test('correct todolist should be removed', () => {
 
     const endState = todolistsReducer(startState, removeTodolistAC(toDoListID1))
 
@@ -27,34 +33,21 @@ test('correct todolist should be removed', ()=>{
 });
 
 test('correct todolist should be added', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
 
     let newTodolistTitle = 'New Todolist';
 
-    const startState: ToDoListsType[] = [
-        {id: todolistId1, title: "What to learn", filter: 'All'},
-        {id: todolistId2, title: "What to buy", filter: 'All'}
-    ]
 
-    const endState = todolistsReducer(startState,addToDoListsAC(newTodolistTitle))
+    const endState = todolistsReducer(startState, addToDoListsAC(newTodolistTitle))
 
     expect(endState.length).toBe(3);
     expect(endState[2].title).toBe(newTodolistTitle)
 })
 
-test('correct todolist should change its name',()=>{
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+test('correct todolist should change its name', () => {
 
     let newTodolistTitle = 'New Todolist';
 
-    const startState: ToDoListsType[] = [
-        {id: todolistId1, title: "What to learn", filter: 'All'},
-        {id: todolistId2, title: "What to buy", filter: 'All'}
-    ]
-
-    const endState = todolistsReducer(startState,changeToDoListTitleAC(todolistId2, newTodolistTitle));
+    const endState = todolistsReducer(startState, changeToDoListTitleAC(toDoListID2, newTodolistTitle));
 
     expect(endState[0].title).toBe('What to learn');
     expect(endState[1].title).toBe(newTodolistTitle);
@@ -62,7 +55,7 @@ test('correct todolist should change its name',()=>{
 
 })
 
-test('correct filter of todolist should be changed', ()=>{
+test('correct filter of todolist should be changed', () => {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
