@@ -1,7 +1,9 @@
 import {FilterButtonType, ToDoListsType} from "../App";
 import {v1} from "uuid";
 
-export const todolistsReducer = (state: Array<ToDoListsType>, action: ActionsType) => {
+const initialState: Array<ToDoListsType> = []
+
+export const todolistsReducer = (state = initialState, action: ActionsType): Array<ToDoListsType>  => {
     switch (action.type) {
 
         case 'ADD-TODOLIST': {
@@ -68,11 +70,11 @@ export const changeToDoListTitleAC = (todolistId2: string, newTodolistTitle: str
 
 type ChangeToDoListFilterACType = ReturnType<typeof changeToDoListFilterAC>
 
-export const changeToDoListFilterAC = (todolistId2: string, newFilter: FilterButtonType) => {
+export const changeToDoListFilterAC = (todolistId: string, newFilter: FilterButtonType) => {
     return {
         type: 'CHANGE-TODOLIST-FILTER',
         payload: {
-            id: todolistId2,
+            id: todolistId,
             filter: newFilter
         }
     } as const
