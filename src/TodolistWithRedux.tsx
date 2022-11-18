@@ -51,7 +51,6 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = ({todolist}) =>
                     dispatch(changeTaskTitleAC(t.id, newValue, id))
                 }
 
-
                 return <div key={t.id} className={t.isDone ? "is-done" : ""}>
                     <Checkbox checked={t.isDone} color="primary" onChange={onChangeHandler}
                     />
