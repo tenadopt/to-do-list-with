@@ -4,7 +4,7 @@ import {FilterButtonType} from "../App";
 import Button from '@mui/material/Button';
 
 type PropsType = {
-    colorActive:FilterButtonType
+    filter: FilterButtonType
     color: "success" | "secondary" | "inherit"
     name: string
     callBack: () => void
@@ -18,6 +18,6 @@ export const ButtonUniv = (props: PropsType) => {
 
     return (
         // <button className={props.color === props.name ? styles.activeFilter:''} onClick={onClickHandler}>{props.name}</button> // with styles
-        <Button variant={props.colorActive === props.name ? "outlined" : "contained"} color={props.color} onClick={onClickHandler}>{props.name}</Button>
+        <Button variant={props.filter === props.name ? "outlined" : "contained"} color={props.color} onClick={onClickHandler}>{props.name}</Button>
     )
 }

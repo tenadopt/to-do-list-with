@@ -102,6 +102,17 @@ export const ToDoList = (props: ToDoListProps) => {
         )
     }
 
+    // let tasksForToDolist = tasks[el.id]
+    //
+    // if (el.filter === 'Active') {
+    //     tasksForToDolist = tasks[el.id].filter(el => !el.isDone)
+    // }
+    //
+    // if (el.filter === 'Completed') {
+    //     tasksForToDolist = tasks[el.id].filter(el => el.isDone)
+    // }
+
+
     return (
 
         <div>
@@ -115,15 +126,15 @@ export const ToDoList = (props: ToDoListProps) => {
             <ul>
                 {mapTasks}
             </ul>
-            <ButtonUniv colorActive={colorActive} name={'All'} color={"success"} callBack={() => {
-                tsarChangeFilter(props.toDoListsID, 'All')
-            }}/>
-            <ButtonUniv colorActive={colorActive} name={'Active'} color={"secondary"} callBack={() => {
-                tsarChangeFilter(props.toDoListsID, 'Active')
-            }}/>
-            <ButtonUniv colorActive={colorActive} name={'Completed'} color={"inherit"} callBack={() => {
-                tsarChangeFilter(props.toDoListsID, 'Completed')
-            }}/>
+            {/*<ButtonUniv colorActive={colorActive} name={'All'} color={"success"} callBack={() => {*/}
+            {/*    tsarChangeFilter(props.toDoListsID, 'All')*/}
+            {/*}}/>*/}
+            {/*<ButtonUniv colorActive={colorActive} name={'Active'} color={"secondary"} callBack={() => {*/}
+            {/*    tsarChangeFilter(props.toDoListsID, 'Active')*/}
+            {/*}}/>*/}
+            {/*<ButtonUniv colorActive={colorActive} name={'Completed'} color={"inherit"} callBack={() => {*/}
+            {/*    tsarChangeFilter(props.toDoListsID, 'Completed')*/}
+            {/*}}/>*/}
         </div>
     )
 }
