@@ -1,9 +1,9 @@
 import {v1} from "uuid";
-import {FilterButtonType, ToDoListsType} from "../App";
+import {FilterButtonType, TodolistsType} from "../AppWithRedux";
 import {
     addToDoListsAC,
-    changeToDoListFilterAC,
-    changeToDoListTitleAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer
 } from './todolists-reducer'
@@ -11,7 +11,7 @@ import {
 let toDoListID1: string;
 let toDoListID2: string;
 
-let startState: Array<ToDoListsType>
+let startState: Array<TodolistsType>
 
 beforeEach(() => {
     let toDoListID1 = v1();
@@ -47,7 +47,7 @@ test('correct todolist should change its name', () => {
 
     let newTodolistTitle = 'New Todolist';
 
-    const endState = todolistsReducer(startState, changeToDoListTitleAC(toDoListID2, newTodolistTitle));
+    const endState = todolistsReducer(startState, changeTodolistTitleAC(toDoListID2, newTodolistTitle));
 
     expect(endState[0].title).toBe('What to learn');
     expect(endState[1].title).toBe(newTodolistTitle);
@@ -61,12 +61,12 @@ test('correct filter of todolist should be changed', () => {
 
     let newFilter: FilterButtonType = 'Completed';
 
-    const startState: ToDoListsType[] = [
+    const startState: TodolistsType[] = [
         {id: todolistId1, title: "What to learn", filter: 'All'},
         {id: todolistId2, title: "What to buy", filter: 'All'}
     ]
 
-    const endState = todolistsReducer(startState, changeToDoListFilterAC(todolistId2, newFilter))
+    const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFilter))
 
     expect(endState[0].filter).toBe('All');
     expect(endState[1].filter).toBe(newFilter);

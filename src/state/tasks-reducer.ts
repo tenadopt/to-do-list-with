@@ -1,4 +1,4 @@
-import {TasksStateType} from "../App";
+import {TasksStateType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {AddToDoListACType, RemoveToDoListACType} from "./todolists-reducer";
 // import {FilterButtonType} from "../App";
@@ -108,24 +108,3 @@ export const changeTaskTitleAC = (toDoListID: string, id: string, newTitle: stri
         }
     } as const
 }
-
-
-// export const filterReducer = (state: FilterButtonType, action: filterReducerACType) => {
-//     switch (action.type) {
-//         case 'FILTER-CHANGE': {
-//             return action.payload.colorActive
-//         }
-//         default: return state
-//     }
-// }
-//
-// type filterReducerACType = ReturnType<typeof filterReducerAC>
-//
-// export const filterReducerAC = (colorActive: FilterButtonType) => {
-//     return {
-//         type: 'FILTER-CHANGE',
-//         payload: {
-//             colorActive: colorActive
-//         }
-//     } as const
-// }

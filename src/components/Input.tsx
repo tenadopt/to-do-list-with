@@ -1,6 +1,5 @@
 import Button from "@mui/material/Button";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import styles from "../ToDolist.module.css";
 import TextField from "@mui/material/TextField";
 
 type InputPropsType = {
@@ -45,7 +44,7 @@ export const Input = (props: InputPropsType) => {
                 variant="outlined"
             />
             <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" onClick={addTask}>+</Button>
-            {error && <div className={styles.errorMessage}>{error}</div>}
+            {/*{error && <div className={styles.errorMessage}>{error}</div>}*/}
         </div>
     );
 };

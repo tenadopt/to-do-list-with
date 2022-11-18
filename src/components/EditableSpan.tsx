@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import styles from "../ToDolist.module.css";
+
 
 type EditableSpanType = {
     editableTitle: string
@@ -31,7 +31,7 @@ export const EditableSpan = (props: EditableSpanType) => {
         <>
             {edit ? <input value={currentTitle} onBlur={changeEdit} autoFocus onChange={onChangeHandler}/> :
                 <span onDoubleClick={changeEdit}>{props.editableTitle}</span>}
-            {error && <div className={styles.errorMessage}>{error}</div>}
+            {/*{error && <div className={styles.errorMessage}>{error}</div>}*/}
         </>
     );
 }
